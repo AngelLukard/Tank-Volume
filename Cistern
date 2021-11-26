@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Capacidad y Volumen</title>
+</head>
+<body>
+       <style media="screen">
+      body
+      {
+        background-color: white;
+        color: blue;
+        font-family: Helvetica;
+      }
+      strong
+      {
+      background-color:yellow;
+      }
+    </style>
+<h3><u>FUEL RESERVOIR WITH ELLIPSOID</u><pre style='display:inline'>&#09</pre>
+<pre style='display:inline'>&#09</pre><u>INCLUDE MEASUREMENT OF THE TANK</u></h3>
+<script type="text/javascript">
+var D = prompt("CYL DIAMTR CNTMTRS:");
+document.write("CYL DIAMTR: " + D +" CM"+
+"<pre style='display:inline'>&#09 </pre>"+ "<pre style='display:inline'>&#09 </pre>"+
+"<pre style='display:inline'>&#09 </pre>"+ "<pre style='display:inline'>&#09 </pre>");
+var L = prompt("CYL LENGTH CNTMTRS:");
+document.write("CYL LENGTH:  " + L +" CM"+ "<br>");
+//var AH = prompt("ALTURA DEL CASQUETE EN CENTIMETROS: ");
+//document.write("ALTURA DEL CASQUETE: " + AH +" CM"+ "<br>");
+var PI = Math.PI;
+var GL = 3.785;
+var R = D / 2;
+//document.write("RADIO: " + R +" CM"+ "<br>");
+var R2 = Math.pow(R, 2);
+//document.write("RADIO^2: " + R2 +" C2"+ "<br>");
+var A = PI*R2;
+//document.write("DECIMALES DE PI: " + PI + "<br>");
+//document.write("AREA SECCION CILINDRICA: " + A +" C2"+ "<br>");
+var V = A * L;
+var VL = V / 1000;
+var VG = V / 3785;
+// document.write("VOLUMEN EN CC: " + V +" CC"+ "<br>");
+// document.write("VOLUMEN EN LITROS: " + VL + "<br>");
+// document.write("VOLUMEN EN GALONES: " + VG + "<br>");
+document.write("<strong><h3>PLUMB OF THE TANK"+
+"<pre style='display:inline'>&#09 </pre>"+ "<pre style='display:inline'>&#09 </pre>"+
+"<pre style='display:inline'>&#09 </pre>"+ "<pre style='display:inline'>&#09 </pre>"+
+"LEVEL RESULTS INTO THE TANK</h3></strong> ");
+var SONDEO ; // Medición del tanque [NO SE APLICA AQUI]
+var REGLA; // Variable de la escala de medicion DEL CILINDRO
+//var REG2;  Variable de la escala de medicion DEL CASQUETE
+var RADICACION; // Función de la parte que se radica [REGLA (2 R – REGLA^2)
+var ACOSEN; // Función de la parte a la que se le saca Arcoseno [1 - (REGLA/R)]
+var FACTOR1; //Arcoseno de la parte que se le saca Arcoseno
+var FACTOR2; // Raiz cuadrada de la parte a la que se le saca RAIZ = RADICACION
+var REGLA2; // REGLA al cuadrado
+var NEWAREA;  // Area hallada con las funciones
+var NEWVOL; // Volumen hallado con las funciones
+var AHCUAD ; // Altura del CASQUETE al cuadrado
+var RCASQ; // Radio "exterior" del casquete circular RCASQ= (R2+AH^2)/2AH
+var VOLGRAL; //Volumen del cilindro y volumen del casquete
+var VOLGRALCC; //Volumen General en CENTIMETROS CUBICOS
+var VOLGRALLT; //Volumen General en LITROS
+var VOLGRALGL; //Volumen General en GALONES
+var porc_sec; //porcentaje para fórmula del casquete = ACOSEN
+var ang_y; //angulo para fórmula del casquete =FACTOR1
+var sen_y; //seno del ángulo  para fórmula del casquete
+var r2sen_y; //fórmula para el área del casquete
+var VOLCASQ;
+var VOLTOT;
+//Ciclo para hallar la ESCALA (SONDEO)
+for (REGLA = 0; REGLA <= D; REGLA=REGLA+5)
+{
+console.log("REGLA: " + REGLA); // Variable de la escala de medicion
+ACOSEN =  1-(REGLA/R);
+REGLA2 = Math.pow(REGLA, 2); // REGLA al cuadrado
+//console.log("REGLA2: " + REGLA2);
+FACTOR1 = Math.acos(ACOSEN);//Arcoseno de la parte que se le saca Arcoseno
+//console.log("FACTOR1: " + FACTOR1);
+RADICACION = REGLA* (D-REGLA);// Función de la parte que se radica [REGLA (2 R – REGLA^2)
+//console.log("RADICADO: " + RADICACION);
+FACTOR2 = Math.pow(RADICACION, 0.5);// Raiz cuadrada de la parte a la que se le saca RAIZ = RADICACION
+//console.log("RADICACION FACTOR2: " + FACTOR2);
+NEWAREA=(R2*FACTOR1)+(REGLA-R)*FACTOR2;// Area hallada con las funciones  FORMULA PRINCIPAL
+//console.log("NEWAREA " + NEWAREA);
+//AHCUAD = Math.pow(AH, 2); // ALTURA DEL CASQUETE al cuadrado para obtener RCASQ
+//RCASQ= (R2+AHCUAD)/(2*AH);
+//console.log("RCASQ " + RCASQ);
+//VOLCASQ = (PI*AHCUAD*(3*RCASQ-AH))/3;
+//Volumen del casquete circular VOLCASQ
+//console.log("VOLCASQ " + VOLCASQ);
+NEWVOL = (L*NEWAREA); // Volumen del CILINDRO en CC
+//console.log("VOLUMEN DEL CILINDRO: " + NEWVOL);
+sen_y = FACTOR1-(Math.sin(FACTOR1));
+//console.log("SENO DEL ANGULO DEL CASQ: " + sen_y);
+r2sen_y = R2*sen_y;
+VOLCASQ = r2sen_y/378,5;
+document.write("CAP VOL. (gln): "  +  VOLCASQ.toFixed(4) +  "   ");
+//Volumen nuevo del casquete para sumarlo al vol del cilindro
+VOLGRALCC=NEWVOL+VOLCASQ; // Volumen  del CILINDRO más volumen del CASQUETE
+//console.log("VOLGRALCC " + VOLGRALCC);
+VOLGRALLT = VOLGRALCC/1000;
+//console.log("VOLGRALLT " + VOLGRALLT);
+//console.log("VOLUMEN DEL CILINDRO: " + NEWVOL);
+VOLGRALGL=VOLGRALLT/GL;
+//console.log("VOLUMEN GENERAL " + VOLGRALGL);
+VOLTOT = VOLGRALGL + VOLCASQ;
+// Fórmula de la primera parte ="SONDEO = NEWVOL*REGLA/L";
+//console.log("ALTURA =  " + REGLA + "  Cms .");
+//console.log("NIVEL=  " + VOLGRALGL + "  Gln" + "<br>");
+document.write("CYL VOL (gln) =  " + VOLGRALGL.toFixed(4)  +  "   ");
+document.write("<pre style='display:inline'>&#09 </pre>"+"HEIGHT (cmt)=  " + "<strong>" + REGLA.toFixed(3) + "</strong>" +  "   ");
+document.write("TOT LEV  (gln) =  " + "<strong>"  + VOLTOT.toFixed(4)  + "</strong>"  + "<br>");
+//document.write("-----------------------------------------------------------------------------------------------------------------------------" + "<br>");
+}
+if (REGLA = D); {
+VOLCASQ = VOLCASQ*1.128729626;
+document.write("CAP VOL. (gln): "  +  VOLCASQ.toFixed(4) +  "   ");
+VOLGRALGL=VOLGRALLT/GL;
+VOLTOT = VG + VOLCASQ;
+document.write("CIL VOL (gln) =  " + VG.toFixed(4)  +  "   ");
+document.write("<pre style='display:inline'>&#09 </pre>"+ "HEIGHT (cmt)=  " + "<strong>" + REGLA + "</strong>" +  "   ");
+document.write("TOT LEV (gln) =  " + "<strong>" + VOLTOT .toFixed(4)  + "</strong>" + "<br>");
+}
+//document.write("F1= A = (R^2*ACOS(1-(REGLA/R))+(REGLA-R)*RCUAD(REGLA*2*R-(REGLA^2)))" + "<br>");
+//document.write("F2= L * {R² * arcCos[1 - (REGLA/R)] + (REGLA - R) * raiz [REGLA (2 R – REGLA^2)]}" + "<br>");
+//document.write("F3= L * {R² * FACTOR1)] + (REGLA - R) * FACTOR2 []}"+ "<br>");
+//document.write("NEWAREA =  " + NEWAREA + "  CC " + "<br>");
+//document.write("NEWVOL =  " + NEWVOL  + "  Gal " + "<br>");
+//document.write("VOLUMEN GENERAL EN CC: " + VOLGRALCC +" CC"+ "<br>");
+//document.write("VOLUMEN GENERAL EN LITROS: " + VOLGRALLT  + "<br>");
+//document.write("VOLUMEN GENERAL EN GALONES: " + VOLGRALGL + "<br>");
+//¿How to create a table through a function?
+var cols;
+var rows;
+function table(rows, cols){document.write('<table border="1">');
+  for (i=0; i < rows; i++)  {  document.write('<tr>');
+  for (j=0; j < cols; j++)   {  document.write('<td>' + REGLA + '</td>');    }
+document.write('</tr>');  }
+document.write('</table>'); }
+document.write("<strong><h3>THE VAR ROD STOPS IN: </h3></strong>");
+table(1, 7);
+//that's one problem but function returns nothing to write also...
+//yes, it will also write undefined due to document.write (table(2, 4));
+//this should only be a function call table(2, 4);
+</script>
+</body>
+</html>
